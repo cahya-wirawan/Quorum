@@ -3,7 +3,7 @@
 **Working title:** Quorum
 **One line:** A multi-agent, evidence-gated pull-request reviewer built on LangGraph that only speaks when it can prove it.
 **Research date:** 2026-09-06
-**Package status:** build-ready blueprint (no application source code included)
+**Package status:** specification & blueprint (implemented in the parent monorepo)
 
 ## What this product is
 

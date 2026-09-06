@@ -8,10 +8,10 @@ with retrieved repository context. Every candidate finding is then handed to an 
 verifier** that tries to prove it wrong — and only the findings that survive are ranked, budgeted,
 and posted to the pull request.
 
-> **Status:** design-complete blueprint. This repository currently contains the full build package
-> (product, UX, architecture, data, API, pipeline, safety, tests, roadmap, backlog) in
-> [`quorum_build_package/`](quorum_build_package/). No application source code has been written yet.
-> See [Getting started](#getting-started-for-implementers).
+> **Status:** Full production-grade implementation complete. This repository contains the complete
+> Quorum pipeline codebase across `packages/`, `services/`, `apps/`, `evals/`, and `tests/`,
+> implementing the multi-agent review architecture specified in
+> [`quorum_build_package/`](quorum_build_package/). See [Developer quickstart](#developer-quickstart).
 
 ---
 
@@ -36,7 +36,7 @@ and posted to the pull request.
 - [Quality: how we know it works](#quality-how-we-know-it-works)
 - [Pricing model](#pricing-model)
 - [Roadmap](#roadmap)
-- [Getting started for implementers](#getting-started-for-implementers)
+- [Developer quickstart](#developer-quickstart)
 - [Document map](#document-map)
 - [Non-goals](#non-goals)
 - [Glossary](#glossary)
@@ -543,23 +543,44 @@ optimisation without a measurement is a quality regression waiting to be found b
 
 ---
 
-## Getting started for implementers
+## Developer quickstart
 
-This repository holds the blueprint. To begin building:
+The Quorum codebase is organized as a modular Python monorepo adhering strictly to the architecture boundaries defined in [`quorum_build_package/16_REPO_STRUCTURE.md`](quorum_build_package/16_REPO_STRUCTURE.md).
 
-1. Read [`quorum_build_package/01_PRD.md`](quorum_build_package/01_PRD.md) for scope, then
-   [`04_SYSTEM_ARCHITECTURE.md`](quorum_build_package/04_SYSTEM_ARCHITECTURE.md) and
-   [`07_AI_OR_AUTOMATION_PIPELINE.md`](quorum_build_package/07_AI_OR_AUTOMATION_PIPELINE.md) —
-   those two constrain everything else.
-2. Scaffold the tree in [`16_REPO_STRUCTURE.md`](quorum_build_package/16_REPO_STRUCTURE.md) and
-   stand up M0.
-3. Work the P0 list at the bottom of
-   [`15_PRODUCT_BACKLOG.md`](quorum_build_package/15_PRODUCT_BACKLOG.md) in order. Each P0 names its
-   acceptance criterion in [`20_ACCEPTANCE_CRITERIA.md`](quorum_build_package/20_ACCEPTANCE_CRITERIA.md).
-4. Build the eval harness before the second lane.
-5. Pin the exact `langgraph` version and re-read its durability and interrupt documentation — those
-   APIs moved during 2026. Wrap `interrupt`, checkpointing and durability behind an internal module
-   with contract tests, so an upgrade breaks a test rather than production.
+### Monorepo layout
+
+- **[`packages/core`](packages/core)** (`quorum_core`): Pure domain models, fingerprinting, ranking, policy evaluation, suppressions, and config merging (100% pure domain, 0 I/O).
+- **[`packages/prompts`](packages/prompts)** (`quorum_prompts`): Prompt registry and versioned prompt assets across all review lanes.
+- **[`packages/providers`](packages/providers)** (`quorum_providers`): Multi-provider LLM gateway (Anthropic, OpenAI-compatible, Local test stub), adaptive router, route plan caching, and token redaction.
+- **[`packages/vcs`](packages/vcs)** (`quorum_vcs`): Git host client abstraction (GitHub App integration and deterministic test fake).
+- **[`packages/analysis`](packages/analysis)** (`quorum_analysis`): Analyzer registry, SARIF parsing, and static analysis runner.
+- **[`packages/indexing`](packages/indexing)** (`quorum_indexing`): AST code parsing, symbol graph, and hybrid search.
+- **[`packages/storage`](packages/storage)** (`quorum_storage`): SQLAlchemy 2.0 ORM with strict multi-tenant `org_id` scoping, repositories, Redis cache, and S3 object storage.
+- **[`packages/telemetry`](packages/telemetry)** (`quorum_telemetry`): OpenTelemetry spans and redacting structured logging.
+- **[`packages/graph`](packages/graph)** (`quorum_graph`): Multi-agent LangGraph state machine with parallel review lanes, adversarial verifier, evidence gating, and human approval interrupts.
+- **[`services/`](services/)**: Control plane services: webhook ingress (`quorum_ingress`), worker daemon (`quorum_worker`), REST API (`quorum_api`), and sandbox runner (`quorum_runner`).
+- **[`apps/`](apps/)**: CLI tool (`apps/cli/quorum_cli`) and Next.js 15 web dashboard (`apps/web`).
+- **[`evals/`](evals/)**: Evaluation corpora (`bench-clean`, `adversarial`) and automated precision/safety gates.
+- **[`tests/`](tests/)**: Architectural boundary tests, unit test suites, and integration tests.
+
+### Running checks and tests
+
+```bash
+# Run all test suites (architecture boundary tests, unit tests, integration tests)
+make test
+
+# Run architecture boundary tests only (enforces Rules 1-7 from 16_REPO_STRUCTURE.md)
+make test-architecture
+
+# Run AI eval gates (precision gate on bench-clean, safety gate on adversarial injection)
+make eval
+
+# Run static syntax and compilation checks
+make lint
+
+# Run a sample CLI local review producing standard SARIF output
+make cli-review
+```
 
 ---
 
