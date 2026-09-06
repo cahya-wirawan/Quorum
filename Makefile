@@ -1,4 +1,4 @@
-.PHONY: setup test test-unit test-integration test-architecture eval lint typecheck cli-review
+.PHONY: setup test test-unit test-integration test-architecture test-migrations eval lint typecheck cli-review version version-check bump-patch bump-minor bump-major
 
 PYTHON ?= python3
 PYTHONPATH := .:packages/core:packages/prompts:packages/providers:packages/vcs:packages/analysis:packages/indexing:packages/telemetry:packages/graph:packages/storage:services/ingress:services/worker:services/api:apps/cli:evals
@@ -53,3 +53,19 @@ typecheck:
 cli-review:
 	@echo "==> Running Quorum CLI local review sample..."
 	printf -- "diff --git a/app.py b/app.py\n@@ -1,2 +1,2 @@\n-old\n+new\n" | $(PYTHON) -m apps.cli.quorum_cli.main review --diff - --format sarif
+
+version:
+	@$(PYTHON) scripts/version.py get
+
+version-check:
+	@$(PYTHON) scripts/version.py validate
+
+bump-patch:
+	@$(PYTHON) scripts/version.py bump patch
+
+bump-minor:
+	@$(PYTHON) scripts/version.py bump minor
+
+bump-major:
+	@$(PYTHON) scripts/version.py bump major
+

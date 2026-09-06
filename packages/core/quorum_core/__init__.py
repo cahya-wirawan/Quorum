@@ -51,8 +51,16 @@ from quorum_core.errors import (
     AuthorizationError,
     NotFoundError,
 )
+from quorum_core.version import (
+    __version__,
+    get_version,
+    VERSION_INFO,
+)
 
 __all__ = [
+    "__version__",
+    "get_version",
+    "VERSION_INFO",
     "EvidenceClass",
     "SourceType",
     "Severity",

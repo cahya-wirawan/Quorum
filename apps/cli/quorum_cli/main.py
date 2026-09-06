@@ -18,6 +18,7 @@ from quorum_core.models import (
     RepoConfig,
     Severity,
 )
+from quorum_core.version import __version__
 from quorum_graph.build import compile_review_graph
 
 
@@ -45,7 +46,7 @@ def format_sarif(findings: List[Finding]) -> Dict[str, Any]:
         "version": "2.1.0",
         "runs": [
             {
-                "tool": {"driver": {"name": "Quorum", "version": "1.0.0"}},
+                "tool": {"driver": {"name": "Quorum", "version": __version__}},
                 "results": results,
             }
         ],
@@ -62,7 +63,7 @@ async def run_cli_review(diff_content: str, output_format: str = "sarif") -> int
         "pr_number": 0,
         "head_sha": "HEAD",
         "base_sha": "BASE",
-        "pipeline_version": "1.0.0",
+        "pipeline_version": __version__,
         "config": RepoConfig(comment_budget=8),
         "policy": Policy(block_on_critical=True),
         "raw_diff": diff_content,
@@ -89,13 +90,23 @@ async def run_cli_review(diff_content: str, output_format: str = "sarif") -> int
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Quorum CLI: Autonomous PR review tool")
-    subparsers = parser.add_subparsers(dest="subcommand", required=True)
+    parser.add_argument(
+        "-v", "--version",
+        action="version",
+        version=f"Quorum v{__version__}",
+        help="Show Quorum version and exit",
+    )
+    subparsers = parser.add_subparsers(dest="subcommand", required=False)
 
     rev_p = subparsers.add_parser("review", help="Review a diff")
     rev_p.add_argument("--diff", required=True, help="Path to diff file or '-' for stdin")
     rev_p.add_argument("--format", choices=["sarif", "text"], default="sarif", help="Output format")
 
     args = parser.parse_args()
+
+    if not args.subcommand:
+        parser.print_help()
+        sys.exit(0)
 
     if args.diff == "-":
         diff_text = sys.stdin.read()

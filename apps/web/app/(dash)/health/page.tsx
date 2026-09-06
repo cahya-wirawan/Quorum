@@ -119,7 +119,7 @@ export default function SystemHealthPage() {
             Core Engine Version
           </span>
           <div style={{ fontSize: "var(--q-fs-3xl)", fontWeight: "var(--q-fw-bold)", marginTop: "var(--q-1)" }}>
-            v2026.09.1
+            v0.1.0
           </div>
           <span style={{ fontSize: "var(--q-fs-xs)", color: "var(--q-ok)" }}>
             ● Healthy &amp; Up to Date

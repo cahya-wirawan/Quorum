@@ -22,6 +22,11 @@ class ApiServer:
         """Readiness probe."""
         return {"status": "ready", "database": "connected"}
 
+    def get_version(self) -> Dict[str, str]:
+        """Service version probe."""
+        from quorum_core.version import __version__
+        return {"version": __version__, "service": "quorum-api"}
+
     # --- Runs API ---
     def get_run(self, org_id: str, run_id: str) -> Dict[str, Any]:
         run = self.storage.get_run(org_id, run_id)

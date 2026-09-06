@@ -615,6 +615,17 @@ make lint
 
 # Run a sample CLI local review producing standard SARIF output
 make cli-review
+
+# Show current version
+make version
+
+# Validate version consistency across all project files (VERSION, pyproject.toml, core, apps/web)
+make version-check
+
+# Bump version across the monorepo (patch, minor, major)
+make bump-patch
+make bump-minor
+make bump-major
 ```
 
 ---

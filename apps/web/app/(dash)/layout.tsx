@@ -151,7 +151,7 @@ export default function DashboardLayout({
             >
               {isDark ? "☀️ Light" : "🌙 Dark"}
             </button>
-            <span style={{ fontSize: "11px", color: "var(--q-text-faint)" }}>v2026.09.1</span>
+            <span style={{ fontSize: "11px", color: "var(--q-text-faint)" }}>v0.1.0</span>
           </div>
         </aside>
 
