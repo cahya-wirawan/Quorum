@@ -314,7 +314,7 @@ names it; comment posting honours secondary rate limits and never double-posts.
 | Control plane | **FastAPI** (Python 3.12, `uv` workspace) | Async, typed, OpenAPI-generating |
 | Queue | **Redis 7** Streams + consumer groups; KEDA autoscaling | Lease semantics that match run resumption |
 | Sandbox | **Kubernetes Jobs** — rootless, read-only rootfs, deny-all egress, ephemeral volume | Untrusted code execution is the highest-risk surface |
-| Database | **PostgreSQL 16** ×2 (app + checkpoints), monthly partitions, RLS | Retention becomes a partition drop; checkpoint churn stays isolated |
+| Database | **PostgreSQL 16** ×2 (app + checkpoints), **Alembic migrations**, monthly partitions, RLS | Expand/contract discipline; retention becomes a partition drop; checkpoint churn stays isolated |
 | Vectors | **pgvector** (HNSW) | One fewer datastore until scale demands otherwise |
 | Index | **tree-sitter**, call/import/inheritance graph, SCIP/LSIF import | Retrieval quality is the real ceiling on finding quality |
 | Objects | S3-compatible (MinIO locally) | Traces, analyzer output, exports |
@@ -555,7 +555,7 @@ The Quorum codebase is organized as a modular Python monorepo adhering strictly 
 - **[`packages/vcs`](packages/vcs)** (`quorum_vcs`): Git host client abstraction (GitHub App integration and deterministic test fake).
 - **[`packages/analysis`](packages/analysis)** (`quorum_analysis`): Analyzer registry, SARIF parsing, and static analysis runner.
 - **[`packages/indexing`](packages/indexing)** (`quorum_indexing`): AST code parsing, symbol graph, and hybrid search.
-- **[`packages/storage`](packages/storage)** (`quorum_storage`): SQLAlchemy 2.0 ORM with strict multi-tenant `org_id` scoping, repositories, Redis cache, and S3 object storage.
+- **[`packages/storage`](packages/storage)** (`quorum_storage`): SQLAlchemy 2.0 ORM with strict multi-tenant `org_id` scoping, Alembic database migrations with expand/contract discipline, repositories, Redis cache, and S3 object storage.
 - **[`packages/telemetry`](packages/telemetry)** (`quorum_telemetry`): OpenTelemetry spans and redacting structured logging.
 - **[`packages/graph`](packages/graph)** (`quorum_graph`): Multi-agent LangGraph state machine with parallel review lanes, adversarial verifier, evidence gating, and human approval interrupts.
 - **[`services/`](services/)**: Control plane services: webhook ingress (`quorum_ingress`), worker daemon (`quorum_worker`), REST API (`quorum_api`), and sandbox runner (`quorum_runner`).
