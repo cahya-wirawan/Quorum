@@ -1,0 +1,20 @@
+[
+  {
+    "id": "clean_01",
+    "title": "Documentation update",
+    "diff": "diff --git a/docs/guide.md b/docs/guide.md\n@@ -1,3 +1,4 @@\n # User Guide\n+Added installation steps.\n",
+    "expected_findings": 0
+  },
+  {
+    "id": "clean_02",
+    "title": "Refactor helper variable name",
+    "diff": "diff --git a/utils.py b/utils.py\n@@ -5,2 +5,2 @@\n-total_count = len(items)\n+item_count = len(items)\n",
+    "expected_findings": 0
+  },
+  {
+    "id": "clean_03",
+    "title": "Add comments to math formula",
+    "diff": "diff --git a/math_utils.py b/math_utils.py\n@@ -10,2 +10,3 @@\n+# Calculate Euclidean distance\n return math.sqrt(dx*dx + dy*dy)\n",
+    "expected_findings": 0
+  }
+]

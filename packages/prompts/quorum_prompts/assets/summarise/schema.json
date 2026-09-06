@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "required": ["markdown_body", "verdict"],
+  "additionalProperties": false,
+  "properties": {
+    "markdown_body": {"type": "string"},
+    "verdict": {"enum": ["pass", "action_required", "neutral"]}
+  }
+}

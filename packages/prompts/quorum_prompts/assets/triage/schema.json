@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "required": ["mode", "reason", "chunks"],
+  "additionalProperties": false,
+  "properties": {
+    "mode": {
+      "enum": ["skip", "light", "full"]
+    },
+    "reason": {
+      "type": "string",
+      "maxLength": 300
+    },
+    "attention_budget_lines": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "chunks": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["files", "risk"],
+        "properties": {
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "risk": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "why": {
+            "type": "string",
+            "maxLength": 200
+          }
+        }
+      }
+    },
+    "skip_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

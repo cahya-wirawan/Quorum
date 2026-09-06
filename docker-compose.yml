@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  postgres-app:
+    image: postgres:16-alpine
+    container_name: quorum-postgres-app
+    environment:
+      POSTGRES_DB: quorum
+      POSTGRES_USER: quorum
+      POSTGRES_PASSWORD: quorum_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata-app:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quorum -d quorum"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  postgres-checkpoints:
+    image: postgres:16-alpine
+    container_name: quorum-postgres-checkpoints
+    environment:
+      POSTGRES_DB: quorum_checkpoints
+      POSTGRES_USER: quorum
+      POSTGRES_PASSWORD: quorum_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata-cp:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quorum -d quorum_checkpoints"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: quorum-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    container_name: quorum-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadminpassword
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - miniodata:/data
+
+volumes:
+  pgdata-app:
+  pgdata-cp:
+  miniodata:

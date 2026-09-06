@@ -48,3 +48,4 @@ logs/
 
 # Misc build artifacts
 *.tmp
+.gauntlet/

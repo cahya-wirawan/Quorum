@@ -1,0 +1,12 @@
+:root {
+  --color-bg: #0d1117;
+  --color-surface: #161b22;
+  --color-border: #30363d;
+  --color-text-primary: #f0f6fc;
+  --color-text-secondary: #8b949e;
+  --color-critical: #f85149;
+  --color-high: #ff7b72;
+  --color-medium: #d29922;
+  --color-low: #58a6ff;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
