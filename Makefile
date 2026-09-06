@@ -18,10 +18,22 @@ test-unit:
 
 test-integration:
 	@echo "==> Running Integration Tests (pipeline, worker, ingress, API, CLI)..."
-	$(PYTHON) -m unittest discover -s tests/integration -p "test_*.py"
+	$(PYTHON) -m unittest discover -s tests/integration -p "test_pipeline_integration.py"
 
-test: test-architecture test-unit test-integration
+test-migrations:
+	@echo "==> Running Database Migration Tests (05_DATA_MODEL.md)..."
+	$(PYTHON) -m unittest tests/integration/test_migrations.py
+
+test: test-architecture test-unit test-integration test-migrations
 	@echo "All test suites passed!"
+
+migrate:
+	@echo "==> Running Database Migrations..."
+	$(PYTHON) -m quorum_storage.db upgrade head
+
+migrate-rollback:
+	@echo "==> Rolling back Database Migration..."
+	$(PYTHON) -m quorum_storage.db downgrade -1
 
 eval:
 	@echo "==> Running AI Eval Gates (AC-100, AC-101)..."

@@ -566,11 +566,20 @@ The Quorum codebase is organized as a modular Python monorepo adhering strictly 
 ### Running checks and tests
 
 ```bash
-# Run all test suites (architecture boundary tests, unit tests, integration tests)
+# Run all test suites (architecture boundary tests, unit tests, integration tests, database migrations)
 make test
 
 # Run architecture boundary tests only (enforces Rules 1-7 from 16_REPO_STRUCTURE.md)
 make test-architecture
+
+# Run database migration tests (lifecycle upgrade/downgrade/re-upgrade, 24 tables, multi-tenant isolation)
+make test-migrations
+
+# Apply database migrations to head
+make migrate
+
+# Roll back database migration by one revision
+make migrate-rollback
 
 # Run AI eval gates (precision gate on bench-clean, safety gate on adversarial injection)
 make eval
