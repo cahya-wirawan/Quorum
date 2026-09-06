@@ -1,0 +1,50 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.venv/
+venv/
+.uv/
+uv.lock.bak
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / TypeScript / Next.js
+node_modules/
+.next/
+.turbo/
+dist/
+build/
+*.tsbuildinfo
+.eslintcache
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Docker / local stack data
+*.pid
+.docker/
+volumes/
+
+# Logs
+*.log
+logs/
+
+# Misc build artifacts
+*.tmp
