@@ -87,24 +87,24 @@ flowchart TB
     START((START)) --> ingest
     ingest --> triage
     triage -->|skip| publish_skip --> END((END))
-    triage -->|light / full| deterministic
+    triage -->|"light / full"| deterministic
     deterministic --> retrieval[[retrieval subgraph]]
-    retrieval --> lane_fanout{{Send: one per enabled lane}}
+    retrieval --> lane_fanout{{"Send: one per enabled lane"}}
     lane_fanout --> correctness[[correctness]]
     lane_fanout --> security[[security]]
     lane_fanout --> api_contract[[api_contract]]
     lane_fanout --> tests[[tests]]
-    lane_fanout --> style[[style · advisory]]
+    lane_fanout --> lane_style[["style · advisory"]]
     correctness --> merge
     security --> merge
     api_contract --> merge
     tests --> merge
-    style --> merge
-    merge[dedupe_merge] --> verify_fanout{{Send: one per candidate finding}}
+    lane_style --> merge
+    merge[dedupe_merge] --> verify_fanout{{"Send: one per candidate finding"}}
     verify_fanout --> verify[[adversarial verify]]
-    verify --> rank[calibrate · rank · budget]
+    verify --> rank["calibrate · rank · budget"]
     rank --> policy
-    policy -->|auto-fix proposed| approval[interrupt: human approval]
+    policy -->|auto-fix proposed| approval["interrupt: human approval"]
     approval --> publish
     policy --> publish
     publish --> learn --> END

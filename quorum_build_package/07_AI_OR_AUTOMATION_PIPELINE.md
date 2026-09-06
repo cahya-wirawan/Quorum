@@ -38,13 +38,13 @@ flowchart TB
     lane_fanout --> api_contract[[lane subgraph: api_contract]]
     lane_fanout --> tests[[lane subgraph: tests]]
     lane_fanout --> performance[[lane: performance - P1]]
-    lane_fanout --> style[[lane: style - advisory]]
+    lane_fanout --> lane_style[["lane: style - advisory"]]
     correctness --> merge
     security --> merge
     api_contract --> merge
     tests --> merge
     performance --> merge
-    style --> merge
+    lane_style --> merge
     merge[dedupe_merge] --> verify_fanout{{Send per candidate finding}}
     verify_fanout --> verify[[verify subgraph]]
     verify --> rank[calibrate_rank_budget]
