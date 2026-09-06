@@ -2,8 +2,10 @@
 name = "quorum-monorepo"
 version = "0.1.0"
 description = "Quorum AI Code Review monorepo"
-requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "sqlalchemy>=2.0.0",
+    "alembic>=1.13.0",
+]
 
 [build-system]
 requires = ["hatchling"]

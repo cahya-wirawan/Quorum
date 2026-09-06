@@ -37,5 +37,8 @@ jobs:
       - name: Integration Tests
         run: make test-integration
 
+      - name: Database Migration Tests
+        run: make test-migrations
+
       - name: AI Evaluation Gates
         run: make eval

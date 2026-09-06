@@ -7,6 +7,7 @@ export PYTHONPATH
 
 setup:
 	@echo "Setting up Quorum monorepo..."
+	$(PYTHON) -m pip install -r requirements.txt --break-system-packages 2>/dev/null || $(PYTHON) -m pip install -r requirements.txt
 
 test-architecture:
 	@echo "==> Running Architecture Boundary Checks (16_REPO_STRUCTURE.md)..."
