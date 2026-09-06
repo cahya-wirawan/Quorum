@@ -1,0 +1,136 @@
+{
+  "product_name": "Quorum",
+  "reference_product": "AI pull-request review category: CodeRabbit, Greptile, GitHub Copilot code review, Qodo Merge / PR-Agent",
+  "research_date": "2026-09-06",
+  "target_platforms": [
+    "Web (SaaS dashboard)",
+    "GitHub App (GitLab P1, Azure DevOps/Bitbucket P2)",
+    "CLI (macOS, Linux, Windows)",
+    "Self-hosted container / Kubernetes"
+  ],
+  "chosen_stack": "LangGraph (Python) + FastAPI + LangGraph Server standalone container + PostgreSQL 16/pgvector + Redis 7 + S3-compatible storage + Next.js 15 + Stripe; models provider-abstracted with tiered adaptive routing, defaults Claude Opus 5 / Sonnet 5 / Haiku 4.5",
+  "status": "complete",
+  "evidence_classes": [
+    "verified",
+    "strongly_inferred",
+    "proposed"
+  ],
+  "documents": [
+    {
+      "path": "README.md",
+      "status": "complete"
+    },
+    {
+      "path": "00_REFERENCE_ANALYSIS.md",
+      "status": "complete"
+    },
+    {
+      "path": "01_PRD.md",
+      "status": "complete"
+    },
+    {
+      "path": "02_UX_SCREEN_SPEC.md",
+      "status": "complete"
+    },
+    {
+      "path": "03_USER_FLOWS.md",
+      "status": "complete"
+    },
+    {
+      "path": "04_SYSTEM_ARCHITECTURE.md",
+      "status": "complete"
+    },
+    {
+      "path": "05_DATA_MODEL.md",
+      "status": "complete"
+    },
+    {
+      "path": "06_API_SPEC.md",
+      "status": "complete"
+    },
+    {
+      "path": "07_AI_OR_AUTOMATION_PIPELINE.md",
+      "status": "complete"
+    },
+    {
+      "path": "08_SAFETY_PRIVACY_COMPLIANCE.md",
+      "status": "complete"
+    },
+    {
+      "path": "09_AUTH_AND_PERMISSIONS.md",
+      "status": "complete"
+    },
+    {
+      "path": "10_OFFLINE_SYNC_AND_STORAGE.md",
+      "status": "complete"
+    },
+    {
+      "path": "11_MONETIZATION_AND_BILLING.md",
+      "status": "complete"
+    },
+    {
+      "path": "12_ANALYTICS_AND_OBSERVABILITY.md",
+      "status": "complete"
+    },
+    {
+      "path": "13_TEST_PLAN.md",
+      "status": "complete"
+    },
+    {
+      "path": "14_IMPLEMENTATION_ROADMAP.md",
+      "status": "complete"
+    },
+    {
+      "path": "15_PRODUCT_BACKLOG.md",
+      "status": "complete"
+    },
+    {
+      "path": "16_REPO_STRUCTURE.md",
+      "status": "complete"
+    },
+    {
+      "path": "17_DESIGN_SYSTEM.md",
+      "status": "complete"
+    },
+    {
+      "path": "18_RELEASE_CHECKLIST.md",
+      "status": "complete"
+    },
+    {
+      "path": "19_PROMPT_LIBRARY.md",
+      "status": "complete"
+    },
+    {
+      "path": "20_ACCEPTANCE_CRITERIA.md",
+      "status": "complete"
+    },
+    {
+      "path": "21_RISKS_AND_OPEN_QUESTIONS.md",
+      "status": "complete"
+    },
+    {
+      "path": "SOURCES.md",
+      "status": "complete"
+    }
+  ],
+  "starter_code_included": false,
+  "open_decisions": [
+    "D15 Whether 'Quorum' is the final product name (working title; keep for now, resolve trademark, domain, PR-thread identity and comprehension before GA)",
+    "D1 Default comment budget (8 proposed, tune from held-promotion rate after beta)",
+    "D2 Whether 'unprovable' findings may ever post (recommendation: never in MVP)",
+    "D3 Cross-provider verification as default or Business+ only",
+    "D4 Seat definition (active author+reviewer per period proposed)",
+    "D5 GitLab connector before or after auto-fix",
+    "D6 Whether the advisory style lane survives beta",
+    "D7 Vector storage for very large monorepos (pgvector until 5M chunks)",
+    "D8 How much of the benchmark corpora to publish",
+    "D9 Free-tier private repo allowance (1 proposed)",
+    "D10 Blocking checks never default (escalation only)",
+    "D11 Trace retention default (30 days proposed)",
+    "D12 Whether the verifier sees analyzer output (yes, static_tool evidence only)",
+    "Unresolved with data: optimal refute-rate band, per-repo vs per-org calibration threshold, real recall cost of the comment budget, per-lane yield justification",
+    "D13 Whether the routing policy is customer-tunable or vendor-managed (mode switch + escalation budget proposed for M6)",
+    "D14 Whether adaptive routing is on by default for new orgs (off at M6, revisit at M7)",
+    "Unresolved with data: which of the six escalation triggers earn their cost, and whether per-repo lane yield is a safe de-escalation signal or a cold-start trap"
+  ]
+}
