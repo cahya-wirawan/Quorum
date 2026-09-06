@@ -31,6 +31,7 @@ and posted to the pull request.
 - [Configuration](#configuration)
 - [CLI](#cli)
 - [API](#api)
+- [Web Dashboard](#web-dashboard)
 - [Security, privacy and authentication](#security-privacy-and-authentication)
 - [Self-hosting](#self-hosting)
 - [Quality: how we know it works](#quality-how-we-know-it-works)
@@ -427,6 +428,31 @@ POST /v1/privacy/delete
 Outbound webhooks (`run.completed`, `finding.posted`, `budget.threshold`,
 `autofix.awaiting_approval`) are HMAC-signed with a timestamped signature and retried five times
 over six hours.
+
+---
+
+## Web Dashboard
+
+The Quorum web dashboard ([`apps/web`](apps/web)) is built with [Next.js 15](https://nextjs.org/) and React 19, implementing all 17 screens (S01 through S17) specified in [`quorum_build_package/02_UX_SCREEN_SPEC.md`](quorum_build_package/02_UX_SCREEN_SPEC.md) and design system tokens in [`quorum_build_package/17_DESIGN_SYSTEM.md`](quorum_build_package/17_DESIGN_SYSTEM.md).
+
+### Core Features
+
+- **S01 — S03 Onboarding & First Value**: Connect Git provider with clear scope explanations (`/settings/integrations`), repository selection with real-time indexing progress (`/repos`), and safe trial review simulation against historical PRs locked in `observe` mode (`/repos/[id]/trial`).
+- **S04 — Reviews Inbox (Primary)**: Org-wide review runs with verdict chips, posted vs held counts, URL-synchronized facet filters, and CSV export (`/runs`).
+- **S05 — Review Detail (Primary)**: Three-pane review interface with finding categorization (`Posted`, `Held`, `Suppressed`, `Refuted`), interactive `DiffViewer` anchored to finding line ranges, and `EvidencePanel` detailing adversarial refutation attempts (`/runs/[id]`).
+- **S06 — Run Trace & Graph Inspector**: LangGraph node execution timeline, topological DAG map, routed model tiers, adaptive escalation triggers, and server-redacted JSON payloads with 256 KB truncation safeguards (`/runs/[id]/trace`).
+- **S07 — S09 Configuration & Intelligence**: Effective configuration hierarchy viewer (`default < org < .quorum.yaml < repo UI`), custom rules editor with executable unit test spec runner (`/rules`), and machine-inferred suppression learnings (`/learnings`).
+- **S10 — Analytics & Zero Surveillance**: Signal yield, precision over time, spend vs monthly cap, repository leaderboard, and an enforced **Zero Developer Surveillance** guarantee (metrics never score or rank individual human authors).
+- **S11 — S17 Administration & Security**: Multi-tenant team roles with last owner protection (`/org/members`), multi-provider model routing with connection testers (`/settings/providers`), billing credit meters (`/billing`), immutable audit log with NDJSON export (`/audit`), data retention and DPA agreements (`/settings/privacy`), real-time infrastructure health with emergency mute switch (`/health`), and personal access token (PAT) management (`/account`).
+
+### Development & Build
+
+```bash
+cd apps/web
+npm install
+npm run dev        # Launch local Next.js dev server on http://localhost:3000
+npm run build      # Compile production bundle across all 20 static and dynamic routes
+```
 
 ---
 
